@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class Signup extends Component {
+class Login extends Component {
   constructor(props) {
     super()
     this.state = {
-      name: '',
       email: '',
       password: ''
     }
-    this.handleNameChange = this.handleNameChange.bind(this)
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleNameChange(e) {
-    this.setState({ name: e.target.value})
-  }
   handleEmailChange(e) {
     this.setState({ email: e.target.value})
   }
@@ -44,13 +39,12 @@ class Signup extends Component {
   render( ) {
     return (
       <form onSubmit={this.handleSubmit}>
-        Name: <input type="text" value={this.state.name} onChange={this.handleNameChange} /><br />
         Email: <input type="text" value={this.state.email} onChange={this.handleEmailChange} /><br />
         Password: <input type="password" value={this.state.password} onChange={this.handlePasswordChange} />
-        <input type="submit" value="Sign Up!" />
+        <input type="submit" value="Login!" />
       </form>
     )
   }
 }
 
-export default Signup;
+export default Login;

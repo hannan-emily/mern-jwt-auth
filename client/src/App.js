@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Signup from './Signup';
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        
+        <Signup liftToken={this.liftTokenToState} />
       </div>
     );
   }
