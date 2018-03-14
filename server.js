@@ -26,4 +26,9 @@ app.use(function(req, res, next) {
 
 app.use('/auth', auth);
 
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log(`app listening on port ${PORT}!`);
+});
+
 module.exports = app;
