@@ -41,7 +41,7 @@ class Signup extends Component {
     })
   }
 
-  render( ) {
+  render() {
     return (
       <form onSubmit={this.handleSubmit}>
         Name: <input type="text" value={this.state.name} onChange={this.handleNameChange} /><br />
