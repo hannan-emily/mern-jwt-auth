@@ -8,8 +8,6 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/mernJwtAuth');
 
-// var index = require('./routes/index');
-// var users = require('./routes/users');
 var auth = require('./routes/auth');
 
 var app = express();
@@ -17,7 +15,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // Do we still need this?
 app.use(function(req, res, next) {
