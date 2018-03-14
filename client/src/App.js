@@ -23,8 +23,10 @@ class App extends Component {
     })
   }
 
-  logout= () => {
+  logout() {
     console.log("logging out!")
+    localStorage.removeItem('mernToken')
+    this.setState({token: '', user: {}})
   }
 
   //this is where we put the life cycle hook to keep the user logged in
