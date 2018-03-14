@@ -25,15 +25,14 @@ class Login extends Component {
   //this is both sending and receiving data???????
   handleSubmit(e) {
     e.preventDefault()
-    axios.post('/auth/signup', {
-      name: this.state.name,
+    axios.post('/auth/login', {
       email: this.state.email,
       password: this.state.password
     }).then( result => {
       console.log(result.data)
       localStorage.setItem('mernToken', result.data.token)
       this.props.liftToken(result.data)
-    })
+    }).catch( err => console.log(err))
   }
 
   render( ) {
