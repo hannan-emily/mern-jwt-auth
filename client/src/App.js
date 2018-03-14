@@ -29,10 +29,26 @@ class App extends Component {
   //this is where we put the life cycle hook to keep the user logged in
   //even when they hit refresh
   //adding localstorage for token?
+  //we're passing in our current token from localStorage, and re-evaluating it
+  // or checking for authorization on the axios.post route in else statement
   componentDidMount(){
     var token = localstorage.getItem('mernToken')
-    if (token === 'undefined' || token === null || token === '' || token === undefined){
-
+    if (token === 'undefined' || token === null || token === '' || token === undefined) {
+      localStorage.removeItem('mernToken')
+      this.setState({
+        token: '',
+        user: {}
+      })
+    } else {
+      axios.post('/auth/me/from/token', {
+        token: token
+      }).then( result => {
+        localStorage.setItem('mernToken', result.data.token)
+        this.setState({
+          token: result.data.token,
+          user: result.data.user
+        })
+      }).catch( err => console.log(err) )
     }
   }
 
