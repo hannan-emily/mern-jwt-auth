@@ -13,7 +13,7 @@ router.post('/login', (req, res, next) => {
   let passwordMatch = false
 
   // Look up the User, using a mongoose model
-  User.findOne({email: req.body.email}).then( (err, user) => {
+  User.findOne({email: req.body.email}, function(err, user) {
     hashedPass = user.password
     //compare hashed password to submitted password using bcrypt
     //there is built in bcyrpt function, compareSyc, that does the solve for us
@@ -22,7 +22,7 @@ router.post('/login', (req, res, next) => {
     passwordMatch = bcrypt.compareSync(req.body.password, hashedPass)
     if (passwordMatch) {
       //The passwords match... make a token
-      var token = jwt.sign(user, process.env.JWT_SECRET, {
+      var token = jwt.sign(user.toObject(), process.env.JWT_SECRET, {
         expiresIn: 60 * 60 * 24 //expires in 24 hours (calculated in seconds by this formula)
       })
       res.json({user, token})
@@ -37,7 +37,7 @@ router.post('/login', (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
-  User.findOne({email: req.body.email}).then( (err, user) => {
+  User.findOne({email: req.body.email}, function(err, user) {
     if (user) {
       res.redirect('/auth/signup')
     } else {
@@ -49,7 +49,7 @@ router.post('/signup', (req, res, next) => {
         if (err) {
           res.send(err)
         } else {
-          var token = jwt.sign(user, process.env.JWT_SECRET, {
+          var token = jwt.sign(user.toObject(), process.env.JWT_SECRET, {
             expiresIn: 60 * 60 * 24
           })
           res.json({user, token})
