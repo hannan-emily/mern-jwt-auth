@@ -59,7 +59,7 @@ router.post('/signup', (req, res, next) => {
   })
 })
 
-router.post('/me/from/token', (req, res next) => {
+router.post('/me/from/token', (req, res, next) => {
   //Check for presence of a token
   var token = req.body.token || req.query.token
   if (!token) {

@@ -25,7 +25,7 @@ var userSchema = new mongoose.Schema({
 
 //this returns a user object, but strips the password out
 userSchema.set('toJSON', {
-  transform: (doc, ret, options) => {
+  transform: function(doc, ret, options) {
     let returnJson = {
       _id: ret._id,
       email: ret.email,
@@ -34,3 +34,24 @@ userSchema.set('toJSON', {
     return returnJson
   }
 })
+
+userSchema.methods.authenticated = function(password, cb) {
+  bcrypt.compare(password, this.password, function(err, res) {
+    if (err) {
+      cb(error)
+    } else {
+      cb(null, res ? this : false)
+    }
+  })
+}
+
+//this is a 'before create' hook, but mongoose says pre('save')
+userSchema.pre('save', function(next) {
+  var hash = bcrypt.hashSync(this.password, 10)
+  this.password = hash
+  next();
+});
+
+var User = mongoose.model('User', userSchema);
+
+module.exports = User;

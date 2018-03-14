@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import Signup from './Signup';
 import Login from './Login';
 import UserProfile from './UserProfile';
+import axios from 'axios';
 
 class App extends Component {
   constructor(props) {
@@ -15,14 +15,14 @@ class App extends Component {
     this.logout = this.logout.bind(this)
   }
 
-  liftTokenToState(data) {
+  liftTokenToState = (data) => {
     this.setState({
       token: data.token,
       user: data.user
     })
   }
 
-  logout() {
+  logout= () => {
     console.log("logging out!")
   }
 
@@ -32,7 +32,7 @@ class App extends Component {
   //we're passing in our current token from localStorage, and re-evaluating it
   // or checking for authorization on the axios.post route in else statement
   componentDidMount(){
-    var token = localstorage.getItem('mernToken')
+    var token = localStorage.getItem('mernToken')
     if (token === 'undefined' || token === null || token === '' || token === undefined) {
       localStorage.removeItem('mernToken')
       this.setState({
@@ -53,11 +53,11 @@ class App extends Component {
   }
 
   render() {
-    let theUser = this.state.user
-    if (typeOf theUser === 'object' && Object.keys(theUser).length > 0) {
+    let user = this.state.user
+    if (typeof user === 'object' && Object.keys(user).length > 0) {
       return (
         <div>
-          <UserProfile user={theUser} logout={this.logout} />
+          <UserProfile user={user} logout={this.logout} />
         </div>
       )
     } else {
